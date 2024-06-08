@@ -16,24 +16,15 @@ MonoBehaviour:
   - image: {fileID: 1077985216, guid: 8615982316fcd024aa20eec55de9765f, type: 3}
     price: 0
     isPurchased: 1
-  - image: {fileID: 21300000, guid: ca6b5cfcc5d974d41904595ac3790c2b, type: 3}
+  - image: {fileID: 1696463760, guid: fab1acf7a95e68d4e8749aeecd4c1b52, type: 3}
     price: 100
     isPurchased: 1
-  - image: {fileID: 21300000, guid: c37cc9153eea4be4387816c7e008e3fb, type: 3}
+  - image: {fileID: 996517224, guid: fd8770551ed8179418140e022bf78703, type: 3}
     price: 200
-    isPurchased: 1
-  - image: {fileID: 21300000, guid: 62d75ae5858d5c34cb57c3689285e33d, type: 3}
-    price: 400
     isPurchased: 1
   - image: {fileID: 21300000, guid: 0b0e17d09df0fcc4fb2ec272037ed49a, type: 3}
     price: 400
     isPurchased: 0
   - image: {fileID: 21300000, guid: 5a10c175a2ee3df4e8a4731f0a0f15e3, type: 3}
-    price: 400
-    isPurchased: 0
-  - image: {fileID: 21300000, guid: 8884702b73ba5664bab4259095f6b13f, type: 3}
-    price: 400
-    isPurchased: 0
-  - image: {fileID: 21300000, guid: bd0e6bb21286fa34e97bc10ba5a7ff99, type: 3}
     price: 400
     isPurchased: 0

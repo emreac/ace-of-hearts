@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     //Animators
     [Header("Animators")]
     public Animator c1Anim;
+    public Animator c2Anim;
+    public Animator c3Anim;
+    public Animator c4Anim;
 
 
     [Space(20)]
@@ -461,6 +464,11 @@ public class GameManager : MonoBehaviour
     {
         //Character Animators
         c1Anim.Rebind();
+        c2Anim.Rebind();
+        c3Anim.Rebind();
+        c4Anim.Rebind();
+        
+        //Dealer
         d1Anim.Rebind();
 
 
@@ -500,8 +508,13 @@ public class GameManager : MonoBehaviour
             totalMoney += selectedBet;
             UpdateTotalMoneyDisplay(totalMoney);
             mainText.text = "RETURNED";
+            
             //Character Animations
             c1Anim.SetTrigger("isSurprised");
+            c2Anim.SetTrigger("isSurprised");
+            c3Anim.SetTrigger("isSurprised");
+            c4Anim.SetTrigger("isSurprised");
+       
             //Dealer Animations
             d1Anim.SetTrigger("isSurprised");
 
@@ -519,8 +532,13 @@ public class GameManager : MonoBehaviour
             UpdateTotalMoneyDisplay(totalMoney);
             Debug.Log(totalMoney.ToString());
             mainText.text = "YOU LOST";
+            
             //Char Animators
             c1Anim.SetTrigger("isAngry");
+            c2Anim.SetTrigger("isAngry");
+            c3Anim.SetTrigger("isAngry");
+            c4Anim.SetTrigger("isAngry");
+            
             //Dealer Animations
             d1Anim.SetTrigger("isHappy");
 
@@ -547,8 +565,13 @@ public class GameManager : MonoBehaviour
             UpdateTotalMoneyDisplay(totalMoney);
             Debug.Log(totalMoney.ToString());
             mainText.text = "YOU WIN!";
+            
             //Character Animators
             c1Anim.SetTrigger("isHappy");
+            c2Anim.SetTrigger("isHappy");
+            c3Anim.SetTrigger("isHappy");
+            c4Anim.SetTrigger("isHappy");
+            
             //Dealer Animations
             d1Anim.SetTrigger("isAngry");
             //Save Data
@@ -567,8 +590,12 @@ public class GameManager : MonoBehaviour
             dealerHandText.GetComponent<Text>().color = Color.yellow;
             PlayerHandText.GetComponent<Text>().color = Color.yellow;
             mainText.text = "RETURNED";
+           
             //Character Animations
             c1Anim.SetTrigger("isSurprised");
+            c2Anim.SetTrigger("isSurprised");
+            c3Anim.SetTrigger("isSurprised");
+            c4Anim.SetTrigger("isSurprised");
 
             //Dealer Animations
             d1Anim.SetTrigger("isSurprised");

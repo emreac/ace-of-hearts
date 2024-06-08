@@ -1622,6 +1622,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   c1Anim: {fileID: 1102059641}
+  c2Anim: {fileID: 624401884}
+  c3Anim: {fileID: 1100882420}
   d1Anim: {fileID: 959249781}
   betButtons:
   - {fileID: 1585848187}
@@ -3504,7 +3506,7 @@ MonoBehaviour:
   m_text: 500
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4027b886a49a05b4fae2aacbb81d6cb2, type: 2}
-  m_sharedMaterial: {fileID: -1829662550973317458, guid: 73548347728c6eb4c9f5a57806cbb103, type: 2}
+  m_sharedMaterial: {fileID: -2131929062206964927, guid: 4027b886a49a05b4fae2aacbb81d6cb2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4251,7 +4253,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &428261249
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6722,7 +6724,7 @@ MonoBehaviour:
   m_text: Not Enough Coins!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4027b886a49a05b4fae2aacbb81d6cb2, type: 2}
-  m_sharedMaterial: {fileID: -1829662550973317458, guid: 73548347728c6eb4c9f5a57806cbb103, type: 2}
+  m_sharedMaterial: {fileID: -2131929062206964927, guid: 4027b886a49a05b4fae2aacbb81d6cb2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8557,7 +8559,7 @@ Animator:
   m_GameObject: {fileID: 959249779}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c1ba6332f2c8b1246b0350e8a4aed845, type: 2}
+  m_Controller: {fileID: 9100000, guid: d50b5283d1d7e5142b85a79764bfa895, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -8588,7 +8590,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -228571731, guid: f518785cc27aad749afb352141d1f1f4, type: 3}
+  m_Sprite: {fileID: -535243021, guid: b4515a840f1f10144a6059055480a669, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8756,7 +8758,7 @@ MonoBehaviour:
   m_text: CHARACTER STORE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4027b886a49a05b4fae2aacbb81d6cb2, type: 2}
-  m_sharedMaterial: {fileID: -1829662550973317458, guid: 73548347728c6eb4c9f5a57806cbb103, type: 2}
+  m_sharedMaterial: {fileID: -2131929062206964927, guid: 4027b886a49a05b4fae2aacbb81d6cb2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8780,7 +8782,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 41.8
+  m_fontSize: 43.8
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -10364,7 +10366,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -262944191, guid: 16d43ceee2430384693dfcefc54f00bc, type: 3}
+  m_Sprite: {fileID: -1031213282, guid: fd8770551ed8179418140e022bf78703, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10421,7 +10423,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1102059638
 MonoBehaviour:
   m_ObjectHideFlags: 0

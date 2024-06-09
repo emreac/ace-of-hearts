@@ -22,9 +22,6 @@ MonoBehaviour:
   - image: {fileID: 996517224, guid: fd8770551ed8179418140e022bf78703, type: 3}
     price: 200
     isPurchased: 1
-  - image: {fileID: 21300000, guid: 0b0e17d09df0fcc4fb2ec272037ed49a, type: 3}
-    price: 400
-    isPurchased: 0
-  - image: {fileID: 21300000, guid: 5a10c175a2ee3df4e8a4731f0a0f15e3, type: 3}
+  - image: {fileID: 1688690674, guid: dc03bc3f6f89e4a40a3941530d1fd0ee, type: 3}
     price: 400
     isPurchased: 0

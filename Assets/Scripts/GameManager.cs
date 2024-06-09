@@ -11,6 +11,17 @@ using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
+    //Tutorial UI
+    [SerializeField] GameObject tutorialUI;
+    [SerializeField] GameObject hitDialogText;
+    [SerializeField] GameObject fingerBid;
+    [SerializeField] GameObject fingerBigger16;
+    [SerializeField] GameObject fingerLess16;
+   
+    [SerializeField] GameObject fingerStand;
+    [SerializeField] GameObject fingerCall;
+
+
     //Animators
     [Header("Animators")]
     public Animator c1Anim;
@@ -50,6 +61,7 @@ public class GameManager : MonoBehaviour
     public Button betBtn;
     public Button shuffleBtn;
     public Button cancelBtn;
+    public GameObject callGlow;
 
     //Bet buttons
     public Button bet100Btn;
@@ -98,7 +110,20 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        
+        Debug.Log("Persistent Data Path: " + Application.persistentDataPath);
+        //Tutorial UI
+        // Check if the tutorial has been shown before
+        if (PlayerPrefs.GetInt("TutorialShown", 0) == 0)
+        {
+            // Show the tutorial UI
+            tutorialUI.SetActive(true);
+        }
+        else
+        {
+            // Hide the tutorial UI
+            tutorialUI.SetActive(false);
+        }
+
 
 
         //Get Money
@@ -134,6 +159,15 @@ public class GameManager : MonoBehaviour
         betBtn.interactable = true;
 
 
+    }
+    public void CloseTutorial()
+    {
+        // Hide the tutorial UI
+        tutorialUI.SetActive(false);
+
+        // Set the flag to indicate that the tutorial has been shown
+        PlayerPrefs.SetInt("TutorialShown", 1);
+        PlayerPrefs.Save();
     }
 
     //Player Coin Save and Load Data
@@ -220,6 +254,8 @@ public class GameManager : MonoBehaviour
 
     public void OnBetButtonClicked(int betAmount)
     {
+        fingerBid.SetActive(false);
+        hitBtn.interactable = true;
         dealBtn.interactable = true;
         dealBtnText.GetComponent<Text>().color = Color.white;
    
@@ -286,14 +322,7 @@ public class GameManager : MonoBehaviour
     //Cancel Button
     public void CancelButton()
     {
-        if (totalMoney > 0)
-        {
-            
-        }
-        else
-        {
-            
-        }
+        
 
         foreach (var button in betButtons)
         {
@@ -387,7 +416,12 @@ public class GameManager : MonoBehaviour
     }
     public void DealClicked()
     {
-     
+        hitDialogText.SetActive(true);
+        //Tutorial UI Fingers
+
+        fingerBigger16.SetActive(true);
+        fingerLess16.SetActive(true);
+
         DOTween.PlayForward("HandGlow");
         DOTween.PlayBackwards("DealNeon");
         DOTween.PlayForward("CardsFade");
@@ -433,6 +467,10 @@ public class GameManager : MonoBehaviour
     }
     private void HitClicked()
     {
+        fingerBigger16.SetActive(false);
+        fingerLess16.SetActive(false);
+        hitDialogText.SetActive(false);
+
         // Check that there is still room on the table
         if (playerScript.cardIndex <= 10)
         {
@@ -444,6 +482,12 @@ public class GameManager : MonoBehaviour
 
     private void StandClicked()
     {
+        callGlow.SetActive(true);
+
+        fingerBigger16.SetActive(false);
+        fingerLess16.SetActive(false);
+        hitDialogText.SetActive(false);
+        hitBtn.interactable = false;
         standClicks++;
         if (standClicks > 1) RoundOver();
         HitDealer();
@@ -452,6 +496,7 @@ public class GameManager : MonoBehaviour
 
     private void HitDealer()
     {
+        
         while (dealerScript.handValue < 16 && dealerScript.cardIndex < 10)
         {
             dealerScript.GetCard();
@@ -490,6 +535,8 @@ public class GameManager : MonoBehaviour
     // Check for winnner and loser, hand is over
      public void RoundOver()
     {
+        callGlow.SetActive(false);
+        CloseTutorial();
         
         // Booleans (true/false) for bust and blackjack/21
         bool playerBust = playerScript.handValue > 21;

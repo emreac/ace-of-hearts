@@ -11,6 +11,19 @@ using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
+    //Sound
+    [SerializeField] AudioSource cardShuffleSound;
+    [SerializeField] AudioSource loseRoundSound;
+    [SerializeField] AudioSource winSound;
+    [SerializeField] AudioSource winBJSound;
+    public AudioSource chipSelectSound;
+    [SerializeField] AudioSource buttonSound;
+    [SerializeField] AudioSource sadSound;
+    public AudioSource payoutSound;
+
+    //Particle Coin Burst
+    [SerializeField] ParticleSystem coinBurst;
+
     //Tutorial UI
     [SerializeField] GameObject tutorialUI;
     [SerializeField] GameObject hitDialogText;
@@ -45,7 +58,7 @@ public class GameManager : MonoBehaviour
     public bool hitDealer = false;
 
     //GameObject
-   
+    [SerializeField] GameObject bJ;
     public GameObject winnerDialogBox;
     public GameObject adScreen;
     //Coin Bar Fx
@@ -110,7 +123,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Persistent Data Path: " + Application.persistentDataPath);
+        //Debug.Log("Persistent Data Path: " + Application.persistentDataPath);
         //Tutorial UI
         // Check if the tutorial has been shown before
         if (PlayerPrefs.GetInt("TutorialShown", 0) == 0)
@@ -254,6 +267,8 @@ public class GameManager : MonoBehaviour
 
     public void OnBetButtonClicked(int betAmount)
     {
+        StartCoroutine(BetAndCardSound());
+        //cardShuffleSound.Play();
         fingerBid.SetActive(false);
         hitBtn.interactable = true;
         dealBtn.interactable = true;
@@ -378,6 +393,14 @@ public class GameManager : MonoBehaviour
         //yield on a new YieldInstruction that waits for 3 seconds.
        
     }
+    public IEnumerator BetAndCardSound()
+    {
+        chipSelectSound.Play();
+        yield return new WaitForSeconds(.5f);
+
+        cardShuffleSound.Play();
+
+    }
 
     public IEnumerator BetButtonsCoroutine()
     {
@@ -390,7 +413,7 @@ public class GameManager : MonoBehaviour
     }
     public void ShuffleClicked()
     {
-        
+        cardShuffleSound.Play();
         StartCoroutine(BetButtonsCoroutine());
      
 
@@ -467,6 +490,7 @@ public class GameManager : MonoBehaviour
     }
     private void HitClicked()
     {
+        chipSelectSound.Play();
         fingerBigger16.SetActive(false);
         fingerLess16.SetActive(false);
         hitDialogText.SetActive(false);
@@ -483,7 +507,7 @@ public class GameManager : MonoBehaviour
     private void StandClicked()
     {
         callGlow.SetActive(true);
-
+        chipSelectSound.Play();
         fingerBigger16.SetActive(false);
         fingerLess16.SetActive(false);
         hitDialogText.SetActive(false);
@@ -579,7 +603,8 @@ public class GameManager : MonoBehaviour
             UpdateTotalMoneyDisplay(totalMoney);
             Debug.Log(totalMoney.ToString());
             mainText.text = "YOU LOST";
-            
+            loseRoundSound.Play();
+            sadSound.Play();
             //Char Animators
             c1Anim.SetTrigger("isAngry");
             c2Anim.SetTrigger("isAngry");
@@ -595,8 +620,11 @@ public class GameManager : MonoBehaviour
         // if dealer busts, player didnt, or player has more points, player wins
         else if (dealerBust || playerScript.handValue > dealerScript.handValue)
         {
+            coinBurst.Play();
             if (playerScript.handValue == 21)
             {
+                StartCoroutine(BJDelay());
+                winBJSound.Play();
                 totalMoney += selectedBet * 3;
             }
             
@@ -612,7 +640,7 @@ public class GameManager : MonoBehaviour
             UpdateTotalMoneyDisplay(totalMoney);
             Debug.Log(totalMoney.ToString());
             mainText.text = "YOU WIN!";
-            
+            winSound.Play();
             //Character Animators
             c1Anim.SetTrigger("isHappy");
             c2Anim.SetTrigger("isHappy");
@@ -655,6 +683,8 @@ public class GameManager : MonoBehaviour
             roundOver = false;
         }
 
+        
+
         // Set ui up for next move / hand / turn
         if (roundOver)
         {
@@ -677,5 +707,20 @@ public class GameManager : MonoBehaviour
         }
        
     }
- 
+
+    IEnumerator BJDelay()
+    {
+        //Print the time of when the function is first called.
+        bJ.SetActive(true);
+        DOTween.Restart("BjFadein");
+        DOTween.Restart("BjScale");
+        
+
+        //yield on a new YieldInstruction that waits for 5 seconds.
+        yield return new WaitForSeconds(1.5f);
+   
+        //After we have waited 1 seconds print the time again.
+        bJ.SetActive(false);
+    }
+
 }

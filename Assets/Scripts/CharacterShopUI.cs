@@ -9,6 +9,7 @@ using DG.Tweening;
 public class CharacterShopUI : MonoBehaviour
 {
     public GameManager gameManager;
+    
 
     [Header("Layout Settings")]
    // [SerializeField] float itemSpacing = .5f;
@@ -115,6 +116,7 @@ public class CharacterShopUI : MonoBehaviour
 
     void ChangePlayerSkin()
     {
+        
         Character character = gameManager.GetSelectedCharacter();
         if (character.image != null)
         {
@@ -137,6 +139,7 @@ public class CharacterShopUI : MonoBehaviour
     }
     void OnItemSelected(int index)
     {
+        gameManager.chipSelectSound.Play();
         //Select item in the UI
         SelectItemUI(index);
       
@@ -219,10 +222,12 @@ public class CharacterShopUI : MonoBehaviour
     }
     void OpenShop()
     {
+        gameManager.chipSelectSound.Play();
         shopUI.SetActive (true);
     }
     void CloseShop()
     {
+        gameManager.chipSelectSound.Play();
         shopUI.SetActive(false);
     }
 }

@@ -8,6 +8,7 @@ using DG.Tweening;
 using TMPro;
 using DG.DemiLib;
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioSource cardShuffleSound;
     [SerializeField] AudioSource loseRoundSound;
     [SerializeField] AudioSource winSound;
+    [SerializeField] AudioSource noWinSound;
     [SerializeField] AudioSource winBJSound;
     public AudioSource chipSelectSound;
     [SerializeField] AudioSource buttonSound;
@@ -102,13 +104,13 @@ public class GameManager : MonoBehaviour
 
     // public Text to access and update - hud
     public Text betBtnText;
-    public Text hitBtnText;
+    public TextMeshProUGUI hitBtnText;
     public Text dealBtnText;
     public Text PlayerHandText;
     public Text dealerHandText;
     //public Text cashText;
     public Text mainText;
-    public Text standBtnText;
+    public TextMeshProUGUI standBtnText;
     public TextMeshProUGUI cashText;
     public TextMeshProUGUI cashTextShop;
 
@@ -332,6 +334,15 @@ public class GameManager : MonoBehaviour
                 .SetEase(Ease.Linear);
     }
 
+    public void HitTutorialCloseButton()
+    {
+        SceneManager.LoadScene("GameScene");
+        CloseTutorial();
+        hitDialogText.SetActive(false);
+        fingerBigger16.SetActive(false);
+        fingerLess16.SetActive(false);
+    }
+
 
 
     //Cancel Button
@@ -469,17 +480,17 @@ public class GameManager : MonoBehaviour
         hideCard.GetComponent<Renderer>().enabled = true;
         // Adjust buttons visibility
         //dealBtn.gameObject.SetActive(false);
-        betBtnText.GetComponent<Text>().color = Color.white;
-        standBtnText.GetComponent<Text>().color = Color.white;
+//        betBtnText.GetComponent<Text>().color = Color.white;
+        standBtnText.GetComponent<TextMeshProUGUI>().color = Color.white;
         dealBtnText.GetComponent<Text>().color = whiteClr;
-        hitBtnText.GetComponent<Text>().color = Color.white;
+        hitBtnText.GetComponent<TextMeshProUGUI>().color = Color.white;
         betBtn.interactable = false;
         dealBtn.interactable = false;
         hitBtn.interactable = true;
         standBtn.interactable = true;
         //hitBtn.gameObject.SetActive(true);
         //standBtn.gameObject.SetActive(true);
-        standBtnText.text = "STAND";
+        standBtnText.text = "KEEP HAND";
         // Set standard pot size
  
 
@@ -515,7 +526,7 @@ public class GameManager : MonoBehaviour
         standClicks++;
         if (standClicks > 1) RoundOver();
         HitDealer();
-        standBtnText.text = "CALL";
+        standBtnText.text = "REVEAL HANDS";
     }
 
     private void HitDealer()
@@ -575,7 +586,7 @@ public class GameManager : MonoBehaviour
         // All bust, bets returned
         if (playerBust && dealerBust)
         {
-
+            
             totalMoney += selectedBet;
             UpdateTotalMoneyDisplay(totalMoney);
             mainText.text = "RETURNED";
@@ -665,7 +676,8 @@ public class GameManager : MonoBehaviour
             dealerHandText.GetComponent<Text>().color = Color.yellow;
             PlayerHandText.GetComponent<Text>().color = Color.yellow;
             mainText.text = "RETURNED";
-           
+            noWinSound.Play();
+
             //Character Animations
             c1Anim.SetTrigger("isSurprised");
             c2Anim.SetTrigger("isSurprised");
@@ -692,8 +704,8 @@ public class GameManager : MonoBehaviour
             //DOTween.Play("CardBackMove");
             hitBtn.interactable = false;
             standBtn.interactable = false;
-            standBtnText.GetComponent<Text>().color = whiteClr;
-            hitBtnText.GetComponent<Text>().color = whiteClr;
+            standBtnText.GetComponent<TextMeshProUGUI>().color = whiteClr;
+            hitBtnText.GetComponent<TextMeshProUGUI>().color = whiteClr;
             
             // hitBtn.gameObject.SetActive(false);
             // standBtn.gameObject.SetActive(false);

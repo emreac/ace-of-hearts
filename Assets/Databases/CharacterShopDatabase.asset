@@ -17,11 +17,11 @@ MonoBehaviour:
     price: 0
     isPurchased: 1
   - image: {fileID: 1696463760, guid: fab1acf7a95e68d4e8749aeecd4c1b52, type: 3}
-    price: 100
+    price: 3000
     isPurchased: 0
   - image: {fileID: 996517224, guid: fd8770551ed8179418140e022bf78703, type: 3}
-    price: 200
+    price: 5000
     isPurchased: 0
   - image: {fileID: 1688690674, guid: dc03bc3f6f89e4a40a3941530d1fd0ee, type: 3}
-    price: 400
+    price: 7000
     isPurchased: 0

@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] ParticleSystem coinBurst;
 
     //Tutorial UI
+    [SerializeField] GameObject betReminderUI;
     [SerializeField] GameObject tutorialUI;
     [SerializeField] GameObject hitDialogText;
     [SerializeField] GameObject fingerBid;
@@ -58,6 +59,8 @@ public class GameManager : MonoBehaviour
     public int totalMoney = 1500;
 
     public bool hitDealer = false;
+    //Tutorial Check
+    public bool tutorialCompleted;
 
     //GameObject
     [SerializeField] GameObject bJ;
@@ -135,10 +138,19 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            tutorialCompleted = true;
             // Hide the tutorial UI
             tutorialUI.SetActive(false);
         }
 
+        if (!tutorialCompleted)
+        {
+            betReminderUI.SetActive(false);
+        }
+        else
+        {
+            betReminderUI.SetActive(true);
+        }
 
 
         //Get Money
@@ -269,6 +281,7 @@ public class GameManager : MonoBehaviour
 
     public void OnBetButtonClicked(int betAmount)
     {
+        betReminderUI.SetActive(false);
         StartCoroutine(BetAndCardSound());
         //cardShuffleSound.Play();
         fingerBid.SetActive(false);
@@ -404,6 +417,7 @@ public class GameManager : MonoBehaviour
         //yield on a new YieldInstruction that waits for 3 seconds.
        
     }
+
     public IEnumerator BetAndCardSound()
     {
         chipSelectSound.Play();
@@ -422,8 +436,18 @@ public class GameManager : MonoBehaviour
         }
 
     }
+
+    public IEnumerator BetReminderCoroutine()
+    {
+        yield return new WaitForSeconds(0.8f);
+        betReminderUI.SetActive(true);
+
+    }
+
+
     public void ShuffleClicked()
     {
+        StartCoroutine(BetReminderCoroutine());
         cardShuffleSound.Play();
         StartCoroutine(BetButtonsCoroutine());
      

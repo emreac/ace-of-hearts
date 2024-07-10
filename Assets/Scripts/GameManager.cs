@@ -1,14 +1,10 @@
-using System;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.SocialPlatforms.Impl;
-using UnityEngine;
-using UnityEngine.UI;
-using DG.Tweening;
 using TMPro;
-using DG.DemiLib;
-using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -33,7 +29,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject fingerBid;
     [SerializeField] GameObject fingerBigger16;
     [SerializeField] GameObject fingerLess16;
-   
+
     [SerializeField] GameObject fingerStand;
     [SerializeField] GameObject fingerCall;
 
@@ -125,6 +121,8 @@ public class GameManager : MonoBehaviour
     static CharacterShopData characterShopData = new CharacterShopData();
     static Character selectedCharacter;
 
+    bool isUserCompleteLevel;
+
 
     void Start()
     {
@@ -158,7 +156,7 @@ public class GameManager : MonoBehaviour
         SavePlayer();
 
         UpdateTotalMoneyDisplay(totalMoney);
-    
+
         //Enable all bet buttons
         foreach (var button in betButtons)
         {
@@ -224,17 +222,17 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public  void AddPurchasedCharacter(int characterIndex)
+    public void AddPurchasedCharacter(int characterIndex)
     {
         characterShopData.purchasedCharactersIndexes.Add(characterIndex);
         SavePlayer();
-        
+
     }
-    public  Character GetSelectedCharacter()
+    public Character GetSelectedCharacter()
     {
         return selectedCharacter;
     }
-    public void SetSelectedCharacter(Character character,int index)
+    public void SetSelectedCharacter(Character character, int index)
     {
         selectedCharacter = character;
         selectedCharacterIndex = index;
@@ -249,17 +247,17 @@ public class GameManager : MonoBehaviour
         return characterShopData.purchasedCharactersIndexes[index];
     }
 
-    public  int GetSelectedCharacterIndex()
+    public int GetSelectedCharacterIndex()
     {
         return selectedCharacterIndex;
     }
 
-    public  bool CanSpendCoins(int amount)
+    public bool CanSpendCoins(int amount)
     {
         return (totalMoney >= amount);
     }
 
-    public  void SpendCoins(int amount)
+    public void SpendCoins(int amount)
     {
         totalMoney -= amount;
         SavePlayer();
@@ -267,7 +265,7 @@ public class GameManager : MonoBehaviour
 
     public void Bet100BtnClicked()
     {
-        
+
         DOTween.PlayForward("Bet100Glow");
     }
     public void Bet200BtnClicked()
@@ -288,15 +286,15 @@ public class GameManager : MonoBehaviour
         hitBtn.interactable = true;
         dealBtn.interactable = true;
         dealBtnText.GetComponent<Text>().color = Color.white;
-   
-       
+        TinySauce.OnGameStarted("Game Started");
+
 
         if (totalMoney >= betAmount)
         {
             totalMoney -= betAmount;
             selectedBet = betAmount;// Assign the betAmount to selectedBet
             dealBtn.interactable = true;
-         
+
             //Starts game if money is enough
             DealClicked();
             DOTween.PlayForward("GameCards");
@@ -309,14 +307,14 @@ public class GameManager : MonoBehaviour
         {
             // NOT ENOUGH MONEY!
             // Show "Not Enough Money" prompt and enable Watch Video button
-          
+
             adScreen.SetActive(true);
             DOTween.Play("AdShineRotate");
             DOTween.PlayForward("AdFade");
-      
+
         }
         // Disable all bet buttons
-        
+
         foreach (var button in betButtons)
         {
             button.interactable = false;
@@ -326,8 +324,8 @@ public class GameManager : MonoBehaviour
     public void UpdateTotalMoneyDisplay(int newTotalMoney)
     {
         totalMoney = newTotalMoney;
-      
-      //  cashText.text = $"{totalMoney}";
+
+        //  cashText.text = $"{totalMoney}";
         AnimateNumber(totalMoney);
     }
 
@@ -361,7 +359,7 @@ public class GameManager : MonoBehaviour
     //Cancel Button
     public void CancelButton()
     {
-        
+
 
         foreach (var button in betButtons)
         {
@@ -381,13 +379,13 @@ public class GameManager : MonoBehaviour
     {
         if (totalMoney > 0)
         {
-          
+
         }
         else
         {
-          
+
         }
-        
+
         DOTween.PlayBackwards("AdFade");
         // Simulate watching an ad (add 300 money)
         totalMoney += 300;
@@ -403,7 +401,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-     
+
     }
 
     public IEnumerator DealCoroutine()
@@ -415,7 +413,7 @@ public class GameManager : MonoBehaviour
         dealBtn.interactable = true;
 
         //yield on a new YieldInstruction that waits for 3 seconds.
-       
+
     }
 
     public IEnumerator BetAndCardSound()
@@ -450,7 +448,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(BetReminderCoroutine());
         cardShuffleSound.Play();
         StartCoroutine(BetButtonsCoroutine());
-     
+
 
         //Bet button neons
         DOTween.PlayBackwards("Bet100Glow");
@@ -461,11 +459,11 @@ public class GameManager : MonoBehaviour
         DOTween.PlayBackwards("DealNeon");
         DOTween.PlayBackwards("CardsFade");
         DOTween.PlayBackwards("HandGlow");
-       
+
         betBtn.interactable = true;
         dealerHandText.GetComponent<Text>().color = Color.white;
         PlayerHandText.GetComponent<Text>().color = Color.white;
-        
+
         StartCoroutine(DealCoroutine());
         dealerHandText.text = "?";
         PlayerHandText.text = "?";
@@ -504,7 +502,7 @@ public class GameManager : MonoBehaviour
         hideCard.GetComponent<Renderer>().enabled = true;
         // Adjust buttons visibility
         //dealBtn.gameObject.SetActive(false);
-//        betBtnText.GetComponent<Text>().color = Color.white;
+        //        betBtnText.GetComponent<Text>().color = Color.white;
         standBtnText.GetComponent<TextMeshProUGUI>().color = Color.white;
         dealBtnText.GetComponent<Text>().color = whiteClr;
         hitBtnText.GetComponent<TextMeshProUGUI>().color = Color.white;
@@ -516,7 +514,7 @@ public class GameManager : MonoBehaviour
         //standBtn.gameObject.SetActive(true);
         standBtnText.text = "KEEP HAND";
         // Set standard pot size
- 
+
 
     }
     public void ChangeTextColor()
@@ -555,7 +553,7 @@ public class GameManager : MonoBehaviour
 
     private void HitDealer()
     {
-        
+
         while (dealerScript.handValue < 16 && dealerScript.cardIndex < 10)
         {
             dealerScript.GetCard();
@@ -571,7 +569,7 @@ public class GameManager : MonoBehaviour
         c2Anim.Rebind();
         c3Anim.Rebind();
         c4Anim.Rebind();
-        
+
         //Dealer
         d1Anim.Rebind();
 
@@ -592,11 +590,11 @@ public class GameManager : MonoBehaviour
     }
 
     // Check for winnner and loser, hand is over
-     public void RoundOver()
+    public void RoundOver()
     {
         callGlow.SetActive(false);
         CloseTutorial();
-        
+
         // Booleans (true/false) for bust and blackjack/21
         bool playerBust = playerScript.handValue > 21;
         bool dealerBust = dealerScript.handValue > 21;
@@ -610,17 +608,19 @@ public class GameManager : MonoBehaviour
         // All bust, bets returned
         if (playerBust && dealerBust)
         {
-            
+
             totalMoney += selectedBet;
             UpdateTotalMoneyDisplay(totalMoney);
             mainText.text = "RETURNED";
-            
+
+            TinySauce.OnGameFinished(totalMoney);
+
             //Character Animations
             c1Anim.SetTrigger("isSurprised");
             c2Anim.SetTrigger("isSurprised");
             c3Anim.SetTrigger("isSurprised");
             c4Anim.SetTrigger("isSurprised");
-       
+
             //Dealer Animations
             d1Anim.SetTrigger("isSurprised");
 
@@ -638,6 +638,7 @@ public class GameManager : MonoBehaviour
             UpdateTotalMoneyDisplay(totalMoney);
             Debug.Log(totalMoney.ToString());
             mainText.text = "YOU LOST";
+            TinySauce.OnGameFinished(totalMoney);
             loseRoundSound.Play();
             sadSound.Play();
             //Char Animators
@@ -645,7 +646,7 @@ public class GameManager : MonoBehaviour
             c2Anim.SetTrigger("isAngry");
             c3Anim.SetTrigger("isAngry");
             c4Anim.SetTrigger("isAngry");
-            
+
             //Dealer Animations
             d1Anim.SetTrigger("isHappy");
 
@@ -662,7 +663,7 @@ public class GameManager : MonoBehaviour
                 winBJSound.Play();
                 totalMoney += selectedBet * 3;
             }
-            
+
             PlayerHandText.GetComponent<Text>().color = Color.green;
             DOTween.Restart("CoinGained");
             DOTween.Play("ShineRotate");
@@ -675,18 +676,20 @@ public class GameManager : MonoBehaviour
             UpdateTotalMoneyDisplay(totalMoney);
             Debug.Log(totalMoney.ToString());
             mainText.text = "YOU WIN!";
+            TinySauce.OnGameFinished(totalMoney);
+            TinySauce.OnGameFinished(isUserCompleteLevel, totalMoney, "User Won");
             winSound.Play();
             //Character Animators
             c1Anim.SetTrigger("isHappy");
             c2Anim.SetTrigger("isHappy");
             c3Anim.SetTrigger("isHappy");
             c4Anim.SetTrigger("isHappy");
-            
+
             //Dealer Animations
             d1Anim.SetTrigger("isAngry");
             //Save Data
             SavePlayer();
-    
+
         }
         //Check for tie, return bets
         else if (playerScript.handValue == dealerScript.handValue)
@@ -719,7 +722,7 @@ public class GameManager : MonoBehaviour
             roundOver = false;
         }
 
-        
+
 
         // Set ui up for next move / hand / turn
         if (roundOver)
@@ -730,18 +733,18 @@ public class GameManager : MonoBehaviour
             standBtn.interactable = false;
             standBtnText.GetComponent<TextMeshProUGUI>().color = whiteClr;
             hitBtnText.GetComponent<TextMeshProUGUI>().color = whiteClr;
-            
+
             // hitBtn.gameObject.SetActive(false);
             // standBtn.gameObject.SetActive(false);
             //dealBtn.gameObject.SetActive(true);
-            
+
             mainText.gameObject.SetActive(true);
             dealerHandText.gameObject.SetActive(true);
             hideCard.GetComponent<Renderer>().enabled = false;
             UpdateTotalMoneyDisplay(totalMoney);
             standClicks = 0;
         }
-       
+
     }
 
     IEnumerator BJDelay()
@@ -750,11 +753,11 @@ public class GameManager : MonoBehaviour
         bJ.SetActive(true);
         DOTween.Restart("BjFadein");
         DOTween.Restart("BjScale");
-        
+
 
         //yield on a new YieldInstruction that waits for 5 seconds.
         yield return new WaitForSeconds(1.5f);
-   
+
         //After we have waited 1 seconds print the time again.
         bJ.SetActive(false);
     }
